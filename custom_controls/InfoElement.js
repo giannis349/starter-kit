@@ -6,32 +6,32 @@
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
  */
-"use strict";
+'use strict';
 
 /**
  * Pull in all imports required for this control.
  */
-import React, { Component } from "react";
-import PropTypes from "prop-types";
+import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 
 import {
   ViroImage,
   ViroNode,
   ViroAnimations,
   ViroAnimatedComponent,
-} from "react-viro";
+} from 'react-viro';
 
 /**
  * Pull in all the images needed for this control.
  */
-var infoIconImage = require("../res/icon_info.png");
-console.log('infoelement')
+var infoIconImage = require('../res/icon_info.png');
+console.log('infoelement');
 /**
  * Tags for referencing the animation component views used to execute animations on
  * our Icon Card and our Content Card views.
  */
-var CONTENT_CARD_REF = "contentCard";
-var ICON_CARD_REF = "iconCard";
+var CONTENT_CARD_REF = 'contentCard';
+var ICON_CARD_REF = 'iconCard';
 
 /**
  * Custom control that toggles between two viro images: an Icon Card and a Content Card.
@@ -54,8 +54,8 @@ export default class InfoElement extends Component {
 
     // set initial state here
     this.state = {
-      iconCardAnimation: "showIconAnim",
-      contentCardAnimation: "hideAnim",
+      iconCardAnimation: 'showIconAnim',
+      contentCardAnimation: 'hideAnim',
       runInfoCardAnimation: false,
       runIconCardAnimation: false,
     };
@@ -65,7 +65,8 @@ export default class InfoElement extends Component {
     this._animateIconCard = this._animateIconCard.bind(this);
     this._animateContentCard = this._animateContentCard.bind(this);
     this._animateIconCardFinished = this._animateIconCardFinished.bind(this);
-    this._animateContentCardFinished =  this._animateContentCardFinished.bind(this);
+    this._animateContentCardFinished =
+      this._animateContentCardFinished.bind(this);
   }
 
   /**
@@ -78,7 +79,7 @@ export default class InfoElement extends Component {
       <ViroNode onClick={this._onCardClick} {...this.props}>
         {/* Info Card */}
         <ViroImage
-          transformBehaviors={["billboard"]}
+          transformBehaviors={['billboard']}
           width={1}
           height={1}
           opacity={1.0}
@@ -99,8 +100,7 @@ export default class InfoElement extends Component {
             this.props.contentCardScale[1],
             this.props.contentCardScale[2],
           ]}
-          transformBehaviors={["billboard"]}
-        >
+          transformBehaviors={['billboard']}>
           <ViroImage
             width={1}
             height={1}
@@ -124,7 +124,7 @@ export default class InfoElement extends Component {
    * animate in / out either the Icon or Content card correspondingly.
    */
   _onCardClick() {
-    var showContentCard = this.state.contentCardAnimation == "hideAnim";
+    var showContentCard = this.state.contentCardAnimation == 'hideAnim';
     if (showContentCard == true) {
       this._animateIconCard(!showContentCard);
     } else {
@@ -137,14 +137,14 @@ export default class InfoElement extends Component {
    */
   _animateIconCard(isVisible) {
     this.setState({
-      iconCardAnimation: isVisible ? "showIconAnim" : "hideAnim",
+      iconCardAnimation: isVisible ? 'showIconAnim' : 'hideAnim',
       runIconCardAnimation: true,
     });
   }
 
   _animateContentCard(isVisible) {
     this.setState({
-      contentCardAnimation: isVisible ? "showContentCardAnim" : "hideAnim",
+      contentCardAnimation: isVisible ? 'showContentCardAnim' : 'hideAnim',
       runInfoCardAnimation: true,
     });
   }
@@ -154,13 +154,13 @@ export default class InfoElement extends Component {
    * card after hiding the Icon card and vice versa.
    */
   _animateIconCardFinished() {
-    if (this.state.iconCardAnimation == "hideAnim") {
+    if (this.state.iconCardAnimation == 'hideAnim') {
       this._animateContentCard(true);
     }
   }
 
   _animateContentCardFinished() {
-    if (this.state.contentCardAnimation == "hideAnim") {
+    if (this.state.contentCardAnimation == 'hideAnim') {
       this._animateIconCard(true);
     }
   }
@@ -168,18 +168,18 @@ export default class InfoElement extends Component {
 
 ViroAnimations.registerAnimations({
   hideAnim: {
-    properties: { scaleX: 0.1, scaleY: 0.1, scaleZ: 0.1, opacity: 0.0 },
-    easing: "Bounce",
+    properties: {scaleX: 0.1, scaleY: 0.1, scaleZ: 0.1, opacity: 0.0},
+    easing: 'Bounce',
     duration: 100,
   },
   showContentCardAnim: {
-    properties: { scaleX: 1, scaleY: 1, scaleZ: 1, opacity: 1.0 },
-    easing: "PowerDecel",
+    properties: {scaleX: 1, scaleY: 1, scaleZ: 1, opacity: 1.0},
+    easing: 'PowerDecel',
     duration: 150,
   },
   showIconAnim: {
-    properties: { scaleX: 0.5, scaleY: 0.5, scaleZ: 0.5, opacity: 1.0 },
-    easing: "PowerDecel",
+    properties: {scaleX: 0.5, scaleY: 0.5, scaleZ: 0.5, opacity: 1.0},
+    easing: 'PowerDecel',
     duration: 150,
   },
 });

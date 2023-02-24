@@ -6,14 +6,14 @@
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
  */
-"use strict";
+'use strict';
 
 /**
  * Pull in all imports required for this control.
  */
-import React, { Component } from "react";
-import { StyleSheet } from "react-native";
-import PropTypes from "prop-types";
+import React, {Component} from 'react';
+import {StyleSheet} from 'react-native';
+import PropTypes from 'prop-types';
 
 import {
   ViroScene,
@@ -27,7 +27,7 @@ import {
   ViroText,
   ViroSphere,
   ViroUtils,
-} from "react-viro";
+} from 'react-viro';
 let polarToCartesian = ViroUtils.polarToCartesian;
 
 /**
@@ -46,8 +46,7 @@ export default class LoadingSpinner extends Component {
         {/* NOTE: Additional layer of ViroNode is placed to get around a temporary billboarding bug */}
         <ViroNode
           position={polarToCartesian([0, 0, 0])}
-          transformBehaviors={["billboard"]}
-        >
+          transformBehaviors={['billboard']}>
           <ViroSpinner
             position={spinnerPosition}
             scale={[0.7, 0.7, 0.1]}
@@ -70,9 +69,9 @@ export default class LoadingSpinner extends Component {
  */
 var styles = StyleSheet.create({
   spinnerTextStyle: {
-    fontFamily: "HelveticaNeue-Medium",
+    fontFamily: 'HelveticaNeue-Medium',
     fontSize: 70,
-    color: "#FFFFFF",
+    color: '#FFFFFF',
   },
 });
 

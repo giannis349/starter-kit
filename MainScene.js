@@ -18,6 +18,7 @@ import {StyleSheet} from 'react-native';
 import {
   ViroScene,
   Viro360Image,
+  ViroSkyBox,
   ViroAnimations,
   ViroNode,
   ViroImage,
@@ -29,7 +30,14 @@ let polarToCartesian = ViroUtils.polarToCartesian;
 /**
  * Set all the images and assets required in this scene.
  */
-var backgroundImage = require('./milan.jpeg');
+// var backgroundImage = require('./milan.jpeg');
+var imgnx =
+  'https://cdn2.schoovr.com/tiles/1619614957270akila_ninomiya-00272072_20110325124333/1619614957270akila_ninomiya-00272072_20110325124333.tiles/mobile_l.jpg';
+var source1 =
+  'https://cdn2.schoovr.com/360videos/1619696195988360tms-00199254_Bartolome_7_360.jpg';
+var source2 =
+  'https://cdn2.schoovr.com/360videos/1670588227228C.-Newgrange.jpg';
+var backgroundImage = source1;
 var monorailInfoCard = require('./res/infocard_monorail.png');
 var statueWindowCard = require('./res/infocard_statue.png');
 var slutWindowCard = require('./res/infocard_slut.png');
@@ -63,10 +71,32 @@ export default class OfficeTourSplashScene extends Component {
   render() {
     return (
       <ViroScene style={styles.container}>
-        <Viro360Image
-          source={backgroundImage}
-          onLoadEnd={this._onBackgroundPhotoLoadEnd}
+        <ViroSkyBox
+          source={{
+            nx: {
+              uri: 'https://cdn2.schoovr.com/tiles/1619614957270akila_ninomiya-00272072_20110325124333/1619614957270akila_ninomiya-00272072_20110325124333.tiles/mobile_l.jpg',
+            },
+            px: {
+              uri: 'https://cdn2.schoovr.com/tiles/1619614957270akila_ninomiya-00272072_20110325124333/1619614957270akila_ninomiya-00272072_20110325124333.tiles/mobile_r.jpg',
+            },
+            ny: {
+              uri: 'https://cdn2.schoovr.com/tiles/1619614957270akila_ninomiya-00272072_20110325124333/1619614957270akila_ninomiya-00272072_20110325124333.tiles/mobile_b.jpg',
+            },
+            py: {
+              uri: 'https://cdn2.schoovr.com/tiles/1619614957270akila_ninomiya-00272072_20110325124333/1619614957270akila_ninomiya-00272072_20110325124333.tiles/mobile_u.jpg',
+            },
+            nz: {
+              uri: 'https://cdn2.schoovr.com/tiles/1619614957270akila_ninomiya-00272072_20110325124333/1619614957270akila_ninomiya-00272072_20110325124333.tiles/mobile_b.jpg',
+            },
+            pz: {
+              uri: 'https://cdn2.schoovr.com/tiles/1619614957270akila_ninomiya-00272072_20110325124333/1619614957270akila_ninomiya-00272072_20110325124333.tiles/mobile_f.jpg',
+            },
+          }}
         />
+        {/* <Viro360Image
+          source={{uri: backgroundImage}}
+          onLoadEnd={this._onBackgroundPhotoLoadEnd}
+        /> */}
 
         {/*
          * Display a spinner icon while the background image is being loaded.
@@ -99,6 +129,7 @@ export default class OfficeTourSplashScene extends Component {
           content={slutWindowCard}
           contentCardScale={[3.67, 4, 1]}
           position={polarToCartesian([-5, 0, 0])}
+          onClick={this._onClick}
         />
         <InfoElement
           content={monorailInfoCard}
@@ -115,7 +146,7 @@ export default class OfficeTourSplashScene extends Component {
           position={[0, -3.5, 0]}
           rotation={[-90, 0, 0]}
           source={backImage}
-          onClick={this._onBackClick}
+          onClick={this._onClick}
         />
       </ViroNode>
     );
@@ -132,6 +163,10 @@ export default class OfficeTourSplashScene extends Component {
     });
   }
 
+  _onClick() {
+    backgroundImage = source2;
+    console.log('I just Clicked!', backgroundImage);
+  }
   /**
    * Callback function for when the user taps on back button located at the
    * bottom of the scene. This pops the current scene to the previous one.
