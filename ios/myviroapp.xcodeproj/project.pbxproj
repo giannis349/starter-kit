@@ -484,9 +484,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = K9FMHQ779Z;
+				DEVELOPMENT_TEAM = W5H3GFKG5P;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = myviroapp/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -496,7 +497,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.eduardodorantes.starterkit;
+				PRODUCT_BUNDLE_IDENTIFIER = com.schoovr.schoovr.app;
 				PRODUCT_NAME = myviroapp;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -511,8 +512,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = K9FMHQ779Z;
+				DEVELOPMENT_TEAM = W5H3GFKG5P;
 				INFOPLIST_FILE = myviroapp/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -522,7 +524,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.eduardodorantes.starterkit;
+				PRODUCT_BUNDLE_IDENTIFIER = com.schoovr.schoovr.app;
 				PRODUCT_NAME = myviroapp;
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";

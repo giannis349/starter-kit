@@ -1,3 +1,6 @@
+firt time  open android studio from terminal with command
+open -a /Applications/Android\ Studio.app
+
 # Viro Starter Kit
 
 This is a blank React Native project setup with Viro.

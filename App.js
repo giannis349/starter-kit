@@ -1,55 +1,43 @@
-import React, {useState} from 'react';
-import {StyleSheet} from 'react-native';
-import {
-  ViroARScene,
-  ViroText,
-  ViroConstants,
-  ViroARSceneNavigator,
-} from '@viro-community/react-viro';
+/**
+ * Copyright (c) 2015-present, Viro Media, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ */
+'use strict';
 
-const HelloWorldSceneAR = () => {
-  const [text, setText] = useState('Initializing AR...');
+import React, {Component} from 'react';
 
-  function onInitialized(state, reason) {
-    console.log('guncelleme', state, reason);
-    if (state === ViroConstants.TRACKING_NORMAL) {
-      setText('Hello World!');
-    } else if (state === ViroConstants.TRACKING_NONE) {
-      // Handle loss of tracking
-    }
-  }
+import {ViroVRSceneNavigator} from 'react-viro';
 
-  return (
-    <ViroARScene onTrackingUpdated={onInitialized}>
-      <ViroText
-        text={text}
-        scale={[0.5, 0.5, 0.5]}
-        position={[0, 0, -1]}
-        style={styles.helloWorldTextStyle}
+var createReactClass = require('create-react-class');
+
+/*
+ * TODO: Add your API key below!!
+ */
+var apiKey = 'YOUR_API_KEY_HERE';
+
+var vrScenes = {
+  '360PhotoTour': require('./MainScene'),
+};
+
+var ViroCodeSamplesSceneNavigator = createReactClass({
+  render: function () {
+    return (
+      <ViroVRSceneNavigator
+        initialScene={{
+          scene: vrScenes['360PhotoTour'],
+        }}
+        apiKey={apiKey}
       />
-    </ViroARScene>
-  );
-};
-
-export default () => {
-  return (
-    <ViroARSceneNavigator
-      autofocus={true}
-      initialScene={{
-        scene: HelloWorldSceneAR,
-      }}
-      style={styles.f1}
-    />
-  );
-};
-
-var styles = StyleSheet.create({
-  f1: {flex: 1},
-  helloWorldTextStyle: {
-    fontFamily: 'Arial',
-    fontSize: 30,
-    color: '#ffffff',
-    textAlignVertical: 'center',
-    textAlign: 'center',
+    );
   },
 });
+
+// Uncomment the below line to use the ARDrivingCar Demo. Don't forget to set the apiKey variable in ARDrivingCar.js
+// ViroCodeSamplesSceneNavigator = require('./js/ARDrivingCarDemo/ARDrivingCar');
+
+module.exports = ViroCodeSamplesSceneNavigator;
