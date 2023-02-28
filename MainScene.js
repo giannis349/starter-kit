@@ -87,6 +87,7 @@ export default class OfficeTourSplashScene extends Component {
       imgpz:
         'https://cdn2.schoovr.com/tiles/1619614957270akila_ninomiya-00272072_20110325124333/1619614957270akila_ninomiya-00272072_20110325124333.tiles/mobile_f.jpg',
       hiddepinboard: true,
+      experiense: null,
     };
 
     // bind `this` to functions
@@ -111,35 +112,181 @@ export default class OfficeTourSplashScene extends Component {
    * featuring iconic items like the SLUT, monorail and statue.
    */
   render() {
-    if (this.state.hiddepinboard) {
-      return (
-        <ViroScene style={styles.container}>
-          <ViroSkyBox
-            source={{
-              nx: {
-                uri: this.state.imgnx,
-              },
-              px: {
-                uri: this.state.imgpx,
-              },
-              ny: {
-                uri: this.state.imgny,
-              },
-              py: {
-                uri: this.state.imgpy,
-              },
-              nz: {
-                uri: this.state.imgnz,
-              },
-              pz: {
-                uri: this.state.imgpz,
-              },
-            }}
-          />
-          {/* <Viro360Image
+    return (
+      <ViroScene style={styles.container}>
+        <ViroSkyBox
+          source={{
+            nx: {
+              uri: this.state.imgnx,
+            },
+            px: {
+              uri: this.state.imgpx,
+            },
+            ny: {
+              uri: this.state.imgny,
+            },
+            py: {
+              uri: this.state.imgpy,
+            },
+            nz: {
+              uri: this.state.imgnz,
+            },
+            pz: {
+              uri: this.state.imgpz,
+            },
+          }}
+        />
+        {/* <Viro360Image
           source={{uri: this.state.backgroundImage}}
           onLoadEnd={this._onBackgroundPhotoLoadEnd}
         /> */}
+        {/* <ViroText
+            text="Enter lesson number!"
+            width={6}
+            height={1}
+            position={polarToCartesian([-2, 0, 0])}
+            style={styles.textStyle}
+            outerStroke={{type: 'Outline', width: 8, color: '#dd5400'}}
+          />
+          <ViroText
+            text={'Pin: ' + this.state.newpin}
+            width={6}
+            height={1}
+            position={polarToCartesian([-2, 0, 10])}
+            style={styles.textStyle}
+            outerStroke={{type: 'Outline', width: 8, color: '#dd5400'}}
+          />
+          <ViroText
+            text="1"
+            width={6}
+            height={1}
+            position={polarToCartesian([-2, -10, 20])}
+            style={styles.textStyle}
+            outerStroke={{type: 'Outline', width: 8, color: '#dd5400'}}
+            onFuse={{callback: this._onClickNum('1'), timeToFuse: 1000}}
+          />
+          <ViroText
+            text="2"
+            width={6}
+            height={1}
+            position={polarToCartesian([-2, 0, 20])}
+            style={styles.textStyle}
+            outerStroke={{type: 'Outline', width: 8, color: '#dd5400'}}
+            onFuse={{callback: this._onClickNum('2'), timeToFuse: 1000}}
+          />
+          <ViroText
+            text="3"
+            width={6}
+            height={1}
+            position={polarToCartesian([-2, 10, 20])}
+            style={styles.textStyle}
+            outerStroke={{type: 'Outline', width: 8, color: '#dd5400'}}
+            onFuse={{callback: this._onClickNum('3'), timeToFuse: 1000}}
+          />
+          <ViroText
+            text="4"
+            width={6}
+            height={1}
+            position={polarToCartesian([-2, -10, 30])}
+            style={styles.textStyle}
+            outerStroke={{type: 'Outline', width: 8, color: '#dd5400'}}
+            onFuse={{callback: this._onClickNum('4'), timeToFuse: 1000}}
+          />
+          <ViroText
+            text="5"
+            width={6}
+            height={1}
+            position={polarToCartesian([-2, 0, 30])}
+            style={styles.textStyle}
+            outerStroke={{type: 'Outline', width: 8, color: '#dd5400'}}
+            onFuse={{callback: this._onClickNum('5'), timeToFuse: 1000}}
+          />
+          <ViroText
+            text="6"
+            width={6}
+            height={1}
+            position={polarToCartesian([-2, 10, 30])}
+            style={styles.textStyle}
+            outerStroke={{type: 'Outline', width: 8, color: '#dd5400'}}
+            onFuse={{callback: this._onClickNum('6'), timeToFuse: 1000}}
+          />
+          <ViroText
+            text="7"
+            width={6}
+            height={1}
+            position={polarToCartesian([-2, -10, 40])}
+            style={styles.textStyle}
+            outerStroke={{type: 'Outline', width: 8, color: '#dd5400'}}
+            onFuse={{callback: this._onClickNum('7'), timeToFuse: 1000}}
+          />
+          <ViroText
+            text="8"
+            width={6}
+            height={1}
+            position={polarToCartesian([-2, 0, 40])}
+            style={styles.textStyle}
+            outerStroke={{type: 'Outline', width: 8, color: '#dd5400'}}
+            onFuse={{callback: this._onClickNum('8'), timeToFuse: 1000}}
+          />
+          <ViroText
+            text="9"
+            width={6}
+            height={1}
+            position={polarToCartesian([-2, 10, 40])}
+            style={styles.textStyle}
+            outerStroke={{type: 'Outline', width: 8, color: '#dd5400'}}
+            onFuse={{callback: this._onClickNum('9'), timeToFuse: 1000}}
+          />
+          <ViroImage
+            height={0.3}
+            width={0.27}
+            position={polarToCartesian([-2, -14, 48])}
+            source={getlesimg}
+            onFuse={{callback: this._onClickNum('getlesson'), timeToFuse: 1000}}
+          />
+          <ViroText
+            text="0"
+            width={6}
+            height={1}
+            position={polarToCartesian([-2, 0, 50])}
+            style={styles.textStyle}
+            outerStroke={{type: 'Outline', width: 8, color: '#dd5400'}}
+            onFuse={{callback: this._onClickNum('0'), timeToFuse: 1000}}
+          />
+          <ViroImage
+            height={0.3}
+            width={0.3}
+            position={polarToCartesian([-2, 14, 48])}
+            source={remnum}
+            onFuse={{callback: this._onClickNum('remove'), timeToFuse: 1000}}
+          /> */}
+        {/*
+         * Display a spinner icon while the background image is being loaded.
+         * Once loaded, hide spinner and show the Info UI Elements.
+         */}
+        {/* <LoadingSpinner
+            visible={!this.state.showSceneItems}
+            position={[0, 0, -5]}
+          /> */}
+        {this._getKeypad()}
+      </ViroScene>
+    );
+  }
+
+  /**
+   * Displays a set of InfoElement controls representing several POI locations
+   * within this scene, and as well as a back button at the bottom of the scene.
+   */
+  _getKeypad() {
+    if (this.state.hiddepinboard) {
+      return (
+        <ViroNode
+          opacity={1.0}
+          animation={{
+            name: 'fadeIn',
+            run: this.state.showSceneItems,
+            loop: false,
+          }}>
           <ViroText
             text="Enter lesson number!"
             width={6}
@@ -260,70 +407,17 @@ export default class OfficeTourSplashScene extends Component {
             source={remnum}
             onFuse={{callback: this._onClickNum('remove'), timeToFuse: 1000}}
           />
-          {/*
-           * Display a spinner icon while the background image is being loaded.
-           * Once loaded, hide spinner and show the Info UI Elements.
-           */}
-          {/* <LoadingSpinner
-            visible={!this.state.showSceneItems}
-            position={[0, 0, -5]}
-          /> */}
-        </ViroScene>
+        </ViroNode>
       );
     } else {
-      return (
-        <ViroScene style={styles.container}>
-          <ViroSkyBox
-            source={{
-              nx: {
-                uri: this.state.imgnx,
-              },
-              px: {
-                uri: this.state.imgpx,
-              },
-              ny: {
-                uri: this.state.imgny,
-              },
-              py: {
-                uri: this.state.imgpy,
-              },
-              nz: {
-                uri: this.state.imgnz,
-              },
-              pz: {
-                uri: this.state.imgpz,
-              },
-            }}
-          />
-          {/* <Viro360Image
-          source={{uri: this.state.backgroundImage}}
-          onLoadEnd={this._onBackgroundPhotoLoadEnd}
-        /> */}
-
-          {/*
-           * Display a spinner icon while the background image is being loaded.
-           * Once loaded, hide spinner and show the Info UI Elements.
-           */}
-          {/* <LoadingSpinner
-          visible={!this.state.showSceneItems}
-          position={[0, 0, -5]}
-        /> */}
-
-          {this._getInfoControls()}
-        </ViroScene>
-      );
+      return this._getInfoControls();
     }
   }
-
-  /**
-   * Displays a set of InfoElement controls representing several POI locations
-   * within this scene, and as well as a back button at the bottom of the scene.
-   */
   _getInfoControls() {
     console.log('_getInfoControls');
     return (
       <ViroNode
-        opacity={0.0}
+        opacity={1.0}
         animation={{
           name: 'fadeIn',
           run: this.state.showSceneItems,
@@ -392,11 +486,10 @@ export default class OfficeTourSplashScene extends Component {
     this.props.sceneNavigator.pop();
   }
   _getLesson(l) {
-    console.log('getlesson', l);
     fetch('https://cdn2.schoovr.com/launchbypin/60266')
       .then(response => response.json())
       .then(json => {
-        console.log('res', json.data.experience.data.panos[0].data.name);
+        this.setState({experiense: json.data});
         let pano = json.data.experience.data.panos[0];
         let newsource =
           'https://cdn2.schoovr.com/tiles/' +
@@ -471,6 +564,7 @@ var styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    display: 'none',
   },
   boldFont: {
     color: '#FFFFFF',
@@ -485,6 +579,7 @@ var styles = StyleSheet.create({
     color: '#ffffff',
     textAlignVertical: 'center',
     textAlign: 'center',
+    display: 'none',
   },
 });
 ViroMaterials.createMaterials({
