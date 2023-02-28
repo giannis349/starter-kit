@@ -25,7 +25,7 @@ import {
  * Pull in all the images needed for this control.
  */
 var infoIconImage = require('../res/icon_info.png');
-console.log('infoelement');
+
 /**
  * Tags for referencing the animation component views used to execute animations on
  * our Icon Card and our Content Card views.
@@ -75,6 +75,7 @@ export default class InfoElement extends Component {
    * Card in, and vice versa if the user clicks on it again.
    */
   render() {
+    console.log('infoelement');
     return (
       <ViroNode onClick={this._onCardClick} {...this.props}>
         {/* Info Card */}
@@ -105,7 +106,7 @@ export default class InfoElement extends Component {
             width={1}
             height={1}
             opacity={0.0}
-            scale={[0.1, 0.1, 0.1]}
+            scale={[0.9, 0.9, 0.9]}
             source={this.props.content}
             animation={{
               name: this.state.contentCardAnimation,
