@@ -13,18 +13,21 @@
  */
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
+import {StyleSheet} from 'react-native';
 
 import {
   ViroImage,
   ViroNode,
   ViroAnimations,
+  ViroFlexView,
   ViroAnimatedComponent,
+  ViroText,
 } from 'react-viro';
 
 /**
  * Pull in all the images needed for this control.
  */
-var infoIconImage = require('../res/icon_info.png');
+var infoIconImage = require('../res/poi_white.png');
 
 /**
  * Tags for referencing the animation component views used to execute animations on
@@ -75,16 +78,16 @@ export default class InfoElement extends Component {
    * Card in, and vice versa if the user clicks on it again.
    */
   render() {
-    console.log('infoelement');
+    console.log('infoelement_props', this.props.content.description);
     return (
       <ViroNode onClick={this._onCardClick} {...this.props}>
         {/* Info Card */}
         <ViroImage
           transformBehaviors={['billboard']}
-          width={1}
-          height={1}
+          width={2}
+          height={2}
           opacity={1.0}
-          scale={[0.5, 0.5, 0.5]}
+          scale={[0.4, 0.4, 0.4]}
           source={infoIconImage}
           animation={{
             name: this.state.iconCardAnimation,
@@ -92,6 +95,16 @@ export default class InfoElement extends Component {
             loop: false,
             onFinish: this._animateIconCardFinished,
           }}
+        />
+        <ViroText
+          transformBehaviors={['billboard']}
+          text={this.props.content.title}
+          width={6}
+          height={1}
+          opacity={1.0}
+          scale={[1, 1, 1]}
+          position={[0, 0.7, 0]}
+          style={styles.textStyle}
         />
 
         {/* Content Card*/}
@@ -103,11 +116,17 @@ export default class InfoElement extends Component {
           ]}
           transformBehaviors={['billboard']}>
           <ViroImage
+            transformBehaviors={['billboard']}
             width={1}
             height={1}
             opacity={0.0}
-            scale={[0.9, 0.9, 0.9]}
-            source={this.props.content}
+            scale={[0.4, 0.4, 0.4]}
+            position={[-1.3, 0, 0]}
+            source={{
+              uri:
+                'https://cdn2.schoovr.com/userfiles/' +
+                this.props.content.image,
+            }}
             animation={{
               name: this.state.contentCardAnimation,
               run: this.state.runInfoCardAnimation,
@@ -115,6 +134,36 @@ export default class InfoElement extends Component {
               onFinish: this._animateContentCardFinished,
             }}
           />
+          <ViroFlexView
+            width={2}
+            height={1}
+            opacity={0.0}
+            position={[0.8, 0, 0.5]}
+            transformBehaviors={['billboard']}
+            backgroundColor={'white'}
+            animation={{
+              name: this.state.contentCardAnimation,
+              run: this.state.runInfoCardAnimation,
+              loop: false,
+              onFinish: this._animateContentCardFinished,
+            }}>
+            <ViroText
+              transformBehaviors={['billboard']}
+              text={this.props.content.description}
+              width={2}
+              height={1}
+              opacity={0.0}
+              position={[0.8, 0, 0.5]}
+              scale={[0.3, 0.3, 0.3]}
+              style={styles.textStyleBlack}
+              animation={{
+                name: this.state.contentCardAnimation,
+                run: this.state.runInfoCardAnimation,
+                loop: false,
+                onFinish: this._animateContentCardFinished,
+              }}
+            />
+          </ViroFlexView>
         </ViroNode>
       </ViroNode>
     );
@@ -166,6 +215,47 @@ export default class InfoElement extends Component {
     }
   }
 }
+
+var styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  bgred: {
+    backgroundColor: '#FFFFFF',
+  },
+  boldFont: {
+    color: '#FFFFFF',
+    flex: 1,
+    textAlignVertical: 'center',
+    textAlign: 'center',
+    fontWeight: 'bold',
+  },
+  textStyle: {
+    fontFamily: 'Arial',
+    fontSize: 30,
+    color: '#ffffff',
+    textAlignVertical: 'center',
+    textAlign: 'center',
+    fontWeight: 'bold',
+  },
+  textStyleBlack: {
+    fontFamily: 'Arial',
+    fontSize: 10,
+    color: '#000000',
+    textAlignVertical: 'center',
+    textAlign: 'center',
+  },
+  poitextStyle: {
+    fontFamily: 'Arial',
+    fontSize: 30,
+    color: '#ffffff',
+    textAlignVertical: 'center',
+    textAlign: 'center',
+    fontWeight: 'bold',
+  },
+});
 
 ViroAnimations.registerAnimations({
   hideAnim: {

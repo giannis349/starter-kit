@@ -53,6 +53,7 @@ var source2 =
 var monorailInfoCard = require('./res/infocard_monorail.png');
 var statueWindowCard = require('./res/infocard_statue.png');
 var slutWindowCard = require('./res/infocard_slut.png');
+var indicator = require('./res/poi_white.png');
 var backImage = require('./res/icon_back.png');
 var remnum = require('./res/68.png');
 var getlesimg = require('./res/360.png');
@@ -88,12 +89,13 @@ export default class OfficeTourSplashScene extends Component {
         'https://cdn2.schoovr.com/tiles/1619614957270akila_ninomiya-00272072_20110325124333/1619614957270akila_ninomiya-00272072_20110325124333.tiles/mobile_f.jpg',
       hiddepinboard: true,
       experiense: null,
+      currentpano: null,
     };
 
     // bind `this` to functions
-    this._getInfoControls = this._getInfoControls.bind(this);
-    this._onBackClick = this._onBackClick.bind(this);
-    this._onBackgroundPhotoLoadEnd = this._onBackgroundPhotoLoadEnd.bind(this);
+    // this._getInfoControls = this._getInfoControls.bind(this);
+    // this._onBackClick = this._onBackClick.bind(this);
+    // this._onBackgroundPhotoLoadEnd = this._onBackgroundPhotoLoadEnd.bind(this);
     setTimeout(() => {
       this.setState({backgroundImage: source2});
       // fetch('https://cdn2.schoovr.com/launchbypin/60266')
@@ -410,46 +412,108 @@ export default class OfficeTourSplashScene extends Component {
         </ViroNode>
       );
     } else {
-      return this._getInfoControls();
+      return this._createpois();
     }
   }
   _getInfoControls() {
-    console.log('_getInfoControls');
-    return (
-      <ViroNode
-        opacity={1.0}
-        animation={{
-          name: 'fadeIn',
-          run: this.state.showSceneItems,
-          loop: false,
-        }}>
-        <InfoElement
-          content={slutWindowCard}
-          contentCardScale={[3.67, 4, 1]}
-          position={polarToCartesian([-2, 0, 50])}
-          onClick={this._onClick}
-        />
-        <InfoElement
-          content={monorailInfoCard}
-          contentCardScale={[3.67, 4, 1]}
-          position={polarToCartesian([-5, 77, -10])}
-        />
-        <InfoElement
-          content={statueWindowCard}
-          contentCardScale={[4, 3.95, 2]}
-          position={polarToCartesian([-5, 277, 0])}
-        />
-        <ViroImage
-          scale={[1, 1, 1]}
-          position={[0, -3.5, 0]}
-          rotation={[-90, 0, 0]}
-          source={backImage}
-          onClick={this._onClick}
-        />
-      </ViroNode>
-    );
+    // console.log('_getInfoControls', this.state.currentpano);
+    if (this.state.currentpano) {
+      return <ViroNode opacity={1.0}>{this._createpois()}</ViroNode>;
+
+      // for (let index = 0; index < this.state.currentpano.pois.length; index++) {
+      //   const poi = this.state.currentpano.pois[index];
+      //   console.log('poi', poi.title);
+
+      //   return (
+      //     <ViroImage
+      //       height={0.3}
+      //       width={0.3}
+      //       position={polarToCartesian([
+      //         poi.position.position.x,
+      //         poi.position.position.y,
+      //         poi.position.position.z,
+      //       ])}
+      //       source={indicator}
+      //     />
+      //     // <ViroNode
+      //     //   opacity={1.0}
+      //     //   animation={{
+      //     //     name: 'fadeIn',
+      //     //     run: this.state.showSceneItems,
+      //     //     loop: false,
+      //     //   }}
+      //     //   position={polarToCartesian([0, 0, 0])}>
+      //     //   {/* <ViroText
+      //     //     text="Hello World"
+      //     //     width={3}
+      //     //     height={1}
+      //     //     style={styles.poitextStyle}
+      //     //     position={polarToCartesian([
+      //     //       poi.position.position.x,
+      //     //       poi.position.position.y,
+      //     //       poi.position.position.z,
+      //     //     ])}
+      //     //   /> */}
+      //     //   <InfoElement
+      //     //     content={slutWindowCard}
+      //     //     contentCardScale={[3.67, 4, 1]}
+      //     //     position={polarToCartesian([
+      //     //       poi.position.position.x,
+      //     //       poi.position.position.y,
+      //     //       poi.position.position.z,
+      //     //     ])}
+      //     //     onClick={this._onClick}
+      //     //   />
+      //     //   {/* <InfoElement
+      //     //     content={slutWindowCard}
+      //     //     contentCardScale={[3.67, 4, 1]}
+      //     //     position={polarToCartesian([-2, 0, 50])}
+      //     //     onClick={this._onClick}
+      //     //   />
+      //     //   <InfoElement
+      //     //     content={monorailInfoCard}
+      //     //     contentCardScale={[3.67, 4, 1]}
+      //     //     position={polarToCartesian([-5, 77, -10])}
+      //     //   />
+      //     //   <InfoElement
+      //     //     content={statueWindowCard}
+      //     //     contentCardScale={[4, 3.95, 2]}
+      //     //     position={polarToCartesian([-5, 277, 0])}
+      //     //   /> */}
+      //     //   {/* <ViroImage
+      //     //     scale={[1, 1, 1]}
+      //     //     position={[0, -3.5, 0]}
+      //     //     rotation={[-90, 0, 0]}
+      //     //     source={backImage}
+      //     //     onClick={this._onClick}
+      //     //   /> */}
+      //     // </ViroNode>
+      //   );
+      // }
+    }
   }
 
+  _createpois() {
+    console.log(
+      '_createpois',
+      this.state.currentpano.pois[0].position.position,
+    );
+    return this.state.currentpano.pois.map(poi => {
+      return (
+        <ViroNode key={poi.id} opacity={1.0}>
+          <InfoElement
+            content={(this.slutWindowCard, poi)}
+            contentCardScale={[1.5, 1.5, 1]}
+            position={[
+              -poi.position.position.x,
+              poi.position.position.y / 4,
+              -poi.position.position.z,
+            ]}
+          />
+        </ViroNode>
+      );
+    });
+  }
   /**
    * Callback function for when image has finished loading in the Viro360Photo.
    * We then animate the main info elements into the scene through the
@@ -486,64 +550,65 @@ export default class OfficeTourSplashScene extends Component {
     this.props.sceneNavigator.pop();
   }
   _getLesson(l) {
-    fetch('https://cdn2.schoovr.com/launchbypin/60266')
+    // fetch('https://cdn2.schoovr.com/launchbypin/16662')
+    fetch('https://cdn2.schoovr.com/launchbypin/16662')
       .then(response => response.json())
       .then(json => {
         this.setState({experiense: json.data});
-        let pano = json.data.experience.data.panos[0];
+        this.setState({currentpano: json.data.experience.data.panos[0]});
         let newsource =
           'https://cdn2.schoovr.com/tiles/' +
-          pano.data.name.split('.')[0] +
+          this.state.currentpano.data.name.split('.')[0] +
           '/' +
-          pano.data.name.split('.')[0] +
+          this.state.currentpano.data.name.split('.')[0] +
           '.tiles/preview.jpg';
         this.setState({backgroundImage: newsource});
         this.setState({
           imgnx:
             'https://cdn2.schoovr.com/tiles/' +
-            pano.data.name.split('.')[0] +
+            this.state.currentpano.data.name.split('.')[0] +
             '/' +
-            pano.data.name.split('.')[0] +
+            this.state.currentpano.data.name.split('.')[0] +
             '.tiles/mobile_l.jpg',
         });
         this.setState({
           imgpx:
             'https://cdn2.schoovr.com/tiles/' +
-            pano.data.name.split('.')[0] +
+            this.state.currentpano.data.name.split('.')[0] +
             '/' +
-            pano.data.name.split('.')[0] +
+            this.state.currentpano.data.name.split('.')[0] +
             '.tiles/mobile_r.jpg',
         });
         this.setState({
           imgny:
             'https://cdn2.schoovr.com/tiles/' +
-            pano.data.name.split('.')[0] +
+            this.state.currentpano.data.name.split('.')[0] +
             '/' +
-            pano.data.name.split('.')[0] +
+            this.state.currentpano.data.name.split('.')[0] +
             '.tiles/mobile_d.jpg',
         });
         this.setState({
           imgpy:
             'https://cdn2.schoovr.com/tiles/' +
-            pano.data.name.split('.')[0] +
+            this.state.currentpano.data.name.split('.')[0] +
             '/' +
-            pano.data.name.split('.')[0] +
+            this.state.currentpano.data.name.split('.')[0] +
             '.tiles/mobile_u.jpg',
         });
         this.setState({
           imgnz:
             'https://cdn2.schoovr.com/tiles/' +
-            pano.data.name.split('.')[0] +
+            this.state.currentpano.data.name.split('.')[0] +
             '/' +
-            pano.data.name.split('.')[0] +
+            this.state.currentpano.data.name.split('.')[0] +
             '.tiles/mobile_b.jpg',
         });
         this.setState({
           imgpz:
             'https://cdn2.schoovr.com/tiles/' +
-            pano.data.name.split('.')[0] +
+            this.state.currentpano.data.name.split('.')[0] +
             '/' +
-            pano.data.name.split('.')[0] +
+            this.state.currentpano.data.name.split('.')[0] +
             '.tiles/mobile_f.jpg',
         });
 
@@ -564,7 +629,6 @@ var styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    display: 'none',
   },
   boldFont: {
     color: '#FFFFFF',
@@ -579,7 +643,14 @@ var styles = StyleSheet.create({
     color: '#ffffff',
     textAlignVertical: 'center',
     textAlign: 'center',
-    display: 'none',
+  },
+  poitextStyle: {
+    fontFamily: 'Arial',
+    fontSize: 30,
+    color: '#ffffff',
+    textAlignVertical: 'center',
+    textAlign: 'center',
+    fontWeight: 'bold',
   },
 });
 ViroMaterials.createMaterials({
