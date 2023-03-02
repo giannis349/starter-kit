@@ -48,7 +48,7 @@ var ICON_CARD_REF = 'iconCard';
 
 export default class InfoElement extends Component {
   static propTypes = {
-    content: PropTypes.number, // Opaque type returned by require('./image.jpg')
+    content: PropTypes.object, // Opaque type returned by require('./image.jpg')
     contentCardScale: PropTypes.arrayOf(PropTypes.number),
   };
 
