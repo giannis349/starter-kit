@@ -12,7 +12,7 @@
 /**
  * Pull in all imports required for the controls within this scene.
  */
-import React, {Component} from 'react';
+import React, {Component, useState} from 'react';
 import {SafeAreaView, StyleSheet, TextInput} from 'react-native';
 
 import {
@@ -64,10 +64,28 @@ var num = '';
  */
 var LoadingSpinner = require('./custom_controls/LoadingSpinner');
 var InfoElement = require('./custom_controls/InfoElement');
+var KeyboardPad = require('./KeyboardPad');
+
+const Humbug = {
+  name: 'Humbug',
+  level: 5,
+  hp: 20,
+  type: 'cpu',
+  moves: {
+    move_1: {
+      name: 'Tackle',
+      power: 4,
+    },
+    move_2: {
+      name: 'Growl',
+      power: 0,
+    },
+  },
+};
 
 export default class OfficeTourSplashScene extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     // set initial state
     this.state = {
@@ -91,22 +109,22 @@ export default class OfficeTourSplashScene extends Component {
       experiense: null,
       currentpano: null,
     };
-
+    this._clickGet = this._clickGet.bind(this);
     // bind `this` to functions
     // this._getInfoControls = this._getInfoControls.bind(this);
     // this._onBackClick = this._onBackClick.bind(this);
     // this._onBackgroundPhotoLoadEnd = this._onBackgroundPhotoLoadEnd.bind(this);
-    setTimeout(() => {
-      this.setState({backgroundImage: source2});
-      // fetch('https://cdn2.schoovr.com/launchbypin/60266')
-      //   .then(response => response.json())
-      //   .then(json => {
-      //     console.log('res');
-      //   })
-      //   .catch(error => {
-      //     console.error(error);
-      //   });
-    }, 5000);
+    // setTimeout(() => {
+    //   this.setState({backgroundImage: source2});
+    //   // fetch('https://cdn2.schoovr.com/launchbypin/60266')
+    //   //   .then(response => response.json())
+    //   //   .then(json => {
+    //   //     console.log('res');
+    //   //   })
+    //   //   .catch(error => {
+    //   //     console.error(error);
+    //   //   });
+    // }, 5000);
   }
 
   /**
@@ -282,13 +300,7 @@ export default class OfficeTourSplashScene extends Component {
   _getKeypad() {
     if (this.state.hiddepinboard) {
       return (
-        <ViroNode
-          opacity={1.0}
-          animation={{
-            name: 'fadeIn',
-            run: this.state.showSceneItems,
-            loop: false,
-          }}>
+        <ViroNode opacity={1.0}>
           <ViroText
             text="Enter lesson number!"
             width={6}
@@ -298,119 +310,150 @@ export default class OfficeTourSplashScene extends Component {
             outerStroke={{type: 'Outline', width: 8, color: '#dd5400'}}
           />
           <ViroText
-            text={'Pin: ' + this.state.newpin}
+            text={'Pin: ' + this.state.newpin + this.state.test}
             width={6}
             height={1}
             position={polarToCartesian([-2, 0, 10])}
             style={styles.textStyle}
             outerStroke={{type: 'Outline', width: 8, color: '#dd5400'}}
           />
-          <ViroText
-            text="1"
-            width={6}
-            height={1}
-            position={polarToCartesian([-2, -10, 20])}
-            style={styles.textStyle}
-            outerStroke={{type: 'Outline', width: 8, color: '#dd5400'}}
-            onFuse={{callback: this._onClickNum('1'), timeToFuse: 1000}}
-          />
-          <ViroText
-            text="2"
-            width={6}
-            height={1}
-            position={polarToCartesian([-2, 0, 20])}
-            style={styles.textStyle}
-            outerStroke={{type: 'Outline', width: 8, color: '#dd5400'}}
-            onFuse={{callback: this._onClickNum('2'), timeToFuse: 1000}}
-          />
-          <ViroText
-            text="3"
-            width={6}
-            height={1}
-            position={polarToCartesian([-2, 10, 20])}
-            style={styles.textStyle}
-            outerStroke={{type: 'Outline', width: 8, color: '#dd5400'}}
-            onFuse={{callback: this._onClickNum('3'), timeToFuse: 1000}}
-          />
-          <ViroText
-            text="4"
-            width={6}
-            height={1}
-            position={polarToCartesian([-2, -10, 30])}
-            style={styles.textStyle}
-            outerStroke={{type: 'Outline', width: 8, color: '#dd5400'}}
-            onFuse={{callback: this._onClickNum('4'), timeToFuse: 1000}}
-          />
-          <ViroText
-            text="5"
-            width={6}
-            height={1}
-            position={polarToCartesian([-2, 0, 30])}
-            style={styles.textStyle}
-            outerStroke={{type: 'Outline', width: 8, color: '#dd5400'}}
-            onFuse={{callback: this._onClickNum('5'), timeToFuse: 1000}}
-          />
-          <ViroText
-            text="6"
-            width={6}
-            height={1}
-            position={polarToCartesian([-2, 10, 30])}
-            style={styles.textStyle}
-            outerStroke={{type: 'Outline', width: 8, color: '#dd5400'}}
-            onFuse={{callback: this._onClickNum('6'), timeToFuse: 1000}}
-          />
-          <ViroText
-            text="7"
-            width={6}
-            height={1}
-            position={polarToCartesian([-2, -10, 40])}
-            style={styles.textStyle}
-            outerStroke={{type: 'Outline', width: 8, color: '#dd5400'}}
-            onFuse={{callback: this._onClickNum('7'), timeToFuse: 1000}}
-          />
-          <ViroText
-            text="8"
-            width={6}
-            height={1}
-            position={polarToCartesian([-2, 0, 40])}
-            style={styles.textStyle}
-            outerStroke={{type: 'Outline', width: 8, color: '#dd5400'}}
-            onFuse={{callback: this._onClickNum('8'), timeToFuse: 1000}}
-          />
-          <ViroText
-            text="9"
-            width={6}
-            height={1}
-            position={polarToCartesian([-2, 10, 40])}
-            style={styles.textStyle}
-            outerStroke={{type: 'Outline', width: 8, color: '#dd5400'}}
-            onFuse={{callback: this._onClickNum('9'), timeToFuse: 1000}}
-          />
-          <ViroImage
-            height={0.3}
-            width={0.27}
-            position={polarToCartesian([-2, -14, 48])}
-            source={getlesimg}
-            onFuse={{callback: this._onClickNum('getlesson'), timeToFuse: 1000}}
-          />
-          <ViroText
-            text="0"
-            width={6}
-            height={1}
-            position={polarToCartesian([-2, 0, 50])}
-            style={styles.textStyle}
-            outerStroke={{type: 'Outline', width: 8, color: '#dd5400'}}
-            onFuse={{callback: this._onClickNum('0'), timeToFuse: 1000}}
-          />
-          <ViroImage
-            height={0.3}
-            width={0.3}
-            position={polarToCartesian([-2, 14, 48])}
-            source={remnum}
-            onFuse={{callback: this._onClickNum('remove'), timeToFuse: 1000}}
+          <KeyboardPad
+            {...Humbug}
+            sendClick={this._clickGet.bind(this)}
+            position={[0, 0, 0]}
           />
         </ViroNode>
       );
+      // return (
+      //   <ViroNode
+      //     opacity={1.0}
+      //     animation={{
+      //       name: 'fadeIn',
+      //       run: this.state.showSceneItems,
+      //       loop: false,
+      //     }}>
+      //     <ViroText
+      //       text="Enter lesson number!"
+      //       width={6}
+      //       height={1}
+      //       position={polarToCartesian([-2, 0, 0])}
+      //       style={styles.textStyle}
+      //       outerStroke={{type: 'Outline', width: 8, color: '#dd5400'}}
+      //     />
+      //     <ViroText
+      //       text={'Pin: ' + this.state.newpin}
+      //       width={6}
+      //       height={1}
+      //       position={polarToCartesian([-2, 0, 10])}
+      //       style={styles.textStyle}
+      //       outerStroke={{type: 'Outline', width: 8, color: '#dd5400'}}
+      //     />
+      //     <ViroText
+      //       text="1"
+      //       width={6}
+      //       height={1}
+      //       position={polarToCartesian([-2, -10, 20])}
+      //       style={styles.textStyle}
+      //       outerStroke={{type: 'Outline', width: 8, color: '#dd5400'}}
+      //       onFuse={{callback: this._onClickNum('1'), timeToFuse: 1000}}
+      //     />
+      //     <ViroText
+      //       text="2"
+      //       width={6}
+      //       height={1}
+      //       position={polarToCartesian([-2, 0, 20])}
+      //       style={styles.textStyle}
+      //       outerStroke={{type: 'Outline', width: 8, color: '#dd5400'}}
+      //       onFuse={{callback: this._onClickNum('2'), timeToFuse: 1000}}
+      //     />
+      //     <ViroText
+      //       text="3"
+      //       width={6}
+      //       height={1}
+      //       position={polarToCartesian([-2, 10, 20])}
+      //       style={styles.textStyle}
+      //       outerStroke={{type: 'Outline', width: 8, color: '#dd5400'}}
+      //       onFuse={{callback: this._onClickNum('3'), timeToFuse: 1000}}
+      //     />
+      //     <ViroText
+      //       text="4"
+      //       width={6}
+      //       height={1}
+      //       position={polarToCartesian([-2, -10, 30])}
+      //       style={styles.textStyle}
+      //       outerStroke={{type: 'Outline', width: 8, color: '#dd5400'}}
+      //       onFuse={{callback: this._onClickNum('4'), timeToFuse: 1000}}
+      //     />
+      //     <ViroText
+      //       text="5"
+      //       width={6}
+      //       height={1}
+      //       position={polarToCartesian([-2, 0, 30])}
+      //       style={styles.textStyle}
+      //       outerStroke={{type: 'Outline', width: 8, color: '#dd5400'}}
+      //       onFuse={{callback: this._onClickNum('5'), timeToFuse: 1000}}
+      //     />
+      //     <ViroText
+      //       text="6"
+      //       width={6}
+      //       height={1}
+      //       position={polarToCartesian([-2, 10, 30])}
+      //       style={styles.textStyle}
+      //       outerStroke={{type: 'Outline', width: 8, color: '#dd5400'}}
+      //       onFuse={{callback: this._onClickNum('6'), timeToFuse: 1000}}
+      //     />
+      //     <ViroText
+      //       text="7"
+      //       width={6}
+      //       height={1}
+      //       position={polarToCartesian([-2, -10, 40])}
+      //       style={styles.textStyle}
+      //       outerStroke={{type: 'Outline', width: 8, color: '#dd5400'}}
+      //       onFuse={{callback: this._onClickNum('7'), timeToFuse: 1000}}
+      //     />
+      //     <ViroText
+      //       text="8"
+      //       width={6}
+      //       height={1}
+      //       position={polarToCartesian([-2, 0, 40])}
+      //       style={styles.textStyle}
+      //       outerStroke={{type: 'Outline', width: 8, color: '#dd5400'}}
+      //       onFuse={{callback: this._onClickNum('8'), timeToFuse: 1000}}
+      //     />
+      //     <ViroText
+      //       text="9"
+      //       width={6}
+      //       height={1}
+      //       position={polarToCartesian([-2, 10, 40])}
+      //       style={styles.textStyle}
+      //       outerStroke={{type: 'Outline', width: 8, color: '#dd5400'}}
+      //       onFuse={{callback: this._onClickNum('9'), timeToFuse: 1000}}
+      //     />
+      //     <ViroImage
+      //       height={0.3}
+      //       width={0.27}
+      //       position={polarToCartesian([-2, -14, 48])}
+      //       source={getlesimg}
+      //       onFuse={{callback: this._onClickNum('getlesson'), timeToFuse: 1000}}
+      //     />
+      //     <ViroText
+      //       text="0"
+      //       width={6}
+      //       height={1}
+      //       position={polarToCartesian([-2, 0, 50])}
+      //       style={styles.textStyle}
+      //       outerStroke={{type: 'Outline', width: 8, color: '#dd5400'}}
+      //       onFuse={{callback: this._onClickNum('0'), timeToFuse: 1000}}
+      //     />
+      //     <ViroImage
+      //       height={0.3}
+      //       width={0.3}
+      //       position={polarToCartesian([-2, 14, 48])}
+      //       source={remnum}
+      //       onFuse={{callback: this._onClickNum('remove'), timeToFuse: 1000}}
+      //     />
+      //   </ViroNode>
+      // );
     } else {
       return this._createpois();
     }
@@ -492,7 +535,9 @@ export default class OfficeTourSplashScene extends Component {
       // }
     }
   }
-
+  _clickGet(c) {
+    console.log('_clickGet', c);
+  }
   _createpois() {
     console.log(
       '_createpois',
@@ -551,7 +596,7 @@ export default class OfficeTourSplashScene extends Component {
   }
   _getLesson(l) {
     // fetch('https://cdn2.schoovr.com/launchbypin/16662')
-    fetch('https://cdn2.schoovr.com/launchbypin/16662')
+    fetch('https://cdn2.schoovr.com/launchbypin/' + l)
       .then(response => response.json())
       .then(json => {
         this.setState({experiense: json.data});
