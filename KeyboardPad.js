@@ -52,6 +52,7 @@ var nImage = require('./res/icons8-circled-n-50.png');
 var mImage = require('./res/icons8-circled-m-50.png');
 var enterImage = require('./res/enter.png');
 var backspaceImage = require('./res/backspace.png');
+var spaceImage = require('./res/space.png');
 
 export default class KeyboardPad extends Component {
   constructor() {
@@ -110,11 +111,22 @@ export default class KeyboardPad extends Component {
         <ViroFlexView
           transformBehaviors={['billboard']}
           width={0.55}
-          height={0.23}
+          height={0.26}
           opacity={1.0}
-          position={[0, -0.3, -0.27]}
+          position={[0, -0.2, -0.27]}
           style={styles.flexback}>
           {this._buildpad()}
+          <ViroImage
+            key={40}
+            width={0.5}
+            height={0.05}
+            opacity={1.0}
+            scale={[0.7, 0.7, 0.7]}
+            position={[0, 0, 0]}
+            source={spaceImage}
+            onClick={this._onClickKey('space')}
+            onFuse={{callback: this._onClickKey('space'), timeToFuse: 1000}}
+          />
         </ViroFlexView>
       </ViroNode>
     );

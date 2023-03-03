@@ -18,6 +18,7 @@ import {SafeAreaView, StyleSheet, TextInput} from 'react-native';
 import {
   ViroScene,
   Viro360Image,
+  ViroFlexView,
   ViroSkyBox,
   ViroText,
   ViroAnimations,
@@ -40,6 +41,7 @@ var num = '';
 var LoadingSpinner = require('./custom_controls/LoadingSpinner');
 var InfoElement = require('./custom_controls/InfoElement');
 var KeyboardPad = require('./KeyboardPad');
+var KeyPad = require('./KeyPad');
 
 export default class OfficeTourSplashScene extends Component {
   constructor(props) {
@@ -65,6 +67,8 @@ export default class OfficeTourSplashScene extends Component {
       hiddepinboard: true,
       experiense: null,
       currentpano: null,
+      userName: '',
+      nameadded: false,
     };
     this._clickGet = this._clickGet.bind(this);
   }
@@ -115,7 +119,34 @@ export default class OfficeTourSplashScene extends Component {
    * The keyboard
    */
   _getKeyboard() {
-    if (this.state.hiddepinboard) {
+    if (this.state.hiddepinboard && !this.state.nameadded) {
+      return (
+        <ViroNode opacity={1.0}>
+          <ViroText
+            text="Enter your name to continue."
+            width={6}
+            height={1}
+            position={polarToCartesian([-2, 0, 0])}
+            style={styles.textStyle}
+            outerStroke={{type: 'Outline', width: 8, color: '#dd5400'}}
+          />
+          <ViroText
+            fontSize={24}
+            style={styles.boldFont}
+            position={polarToCartesian([-2, 0, 10])}
+            width={20}
+            height={5}
+            extrusionDepth={8}
+            materials={['frontMaterial', 'backMaterial', 'sideMaterial']}
+            text={'Name: ' + this.state.userName}
+          />
+          <KeyboardPad
+            sendClick={this._clickGet.bind(this)}
+            position={[0, 0, 0]}
+          />
+        </ViroNode>
+      );
+    } else if (this.state.hiddepinboard) {
       return (
         <ViroNode opacity={1.0}>
           <ViroText
@@ -127,17 +158,16 @@ export default class OfficeTourSplashScene extends Component {
             outerStroke={{type: 'Outline', width: 8, color: '#dd5400'}}
           />
           <ViroText
-            text={'Pin: ' + this.state.newpin}
-            width={6}
-            height={1}
+            fontSize={24}
+            style={styles.boldFont}
             position={polarToCartesian([-2, 0, 10])}
-            style={styles.textStyle}
-            outerStroke={{type: 'Outline', width: 8, color: '#dd5400'}}
+            width={20}
+            height={5}
+            extrusionDepth={8}
+            materials={['frontMaterial', 'backMaterial', 'sideMaterial']}
+            text={'Lesson: ' + this.state.newpin}
           />
-          <KeyboardPad
-            sendClick={this._clickGet.bind(this)}
-            position={[0, 0, 0]}
-          />
+          <KeyPad sendClick={this._clickGet.bind(this)} position={[0, 0, 0]} />
         </ViroNode>
       );
     } else {
@@ -202,10 +232,27 @@ export default class OfficeTourSplashScene extends Component {
       num = num.slice(0, -1);
       this.setState({newpin: num});
     } else if (n.indexOf('enter') > -1) {
-      this._getLesson(num);
-    } else if (n !== 'enter' || n !== 'backspace') {
-      num += n;
+      if (!this.state.nameadded) {
+        this.setState({
+          nameadded: true,
+        });
+        num = '';
+      } else {
+        this._getLesson(num);
+      }
+    } else if (n.indexOf('space') > -1) {
+      num += ' ';
       this.setState({newpin: num});
+    } else if (n !== 'enter' || n !== 'backspace' || n !== 'space') {
+      if (!this.state.nameadded) {
+        num += n;
+        this.setState({userName: num});
+      } else {
+        num += n;
+        this.setState({newpin: num});
+      }
+      // num += n;
+      // this.setState({newpin: num});
     }
   }
   /**
@@ -312,6 +359,13 @@ var styles = StyleSheet.create({
     textAlignVertical: 'center',
     textAlign: 'center',
   },
+  textStylePin: {
+    fontFamily: 'Arial',
+    fontSize: 15,
+    color: '#000000',
+    textAlignVertical: 'center',
+    textAlign: 'center',
+  },
   poitextStyle: {
     fontFamily: 'Arial',
     fontSize: 30,
@@ -320,16 +374,24 @@ var styles = StyleSheet.create({
     textAlign: 'center',
     fontWeight: 'bold',
   },
+  flexback: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    backgroundColor: 'rgba(221, 214, 212, 0.81)',
+    padding: 0.01,
+  },
 });
 ViroMaterials.createMaterials({
   frontMaterial: {
     diffuseColor: '#FFFFFF',
   },
   backMaterial: {
-    diffuseColor: '#FF0000',
+    diffuseColor: '#dd5400',
   },
   sideMaterial: {
-    diffuseColor: '#0000FF',
+    diffuseColor: '#dd5400',
   },
 });
 /**
