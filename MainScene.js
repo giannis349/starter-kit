@@ -292,6 +292,7 @@ export default class OfficeTourSplashScene extends Component {
       } else if (n.indexOf('enter') > -1) {
         // this._getLesson(num);
         this.setState({userCreated: true});
+        num = '';
       } else if (n && n.length > 0) {
         num += n;
         this.setState({userName: num});

@@ -121,7 +121,6 @@ export default class KeyboardPad extends Component {
   }
 
   _buildpad() {
-    console.log('test');
     return this.state.allKeys.map(val => {
       return (
         <ViroImage
@@ -141,7 +140,6 @@ export default class KeyboardPad extends Component {
   _onClickKey(n) {
     return source => {
       if (n) {
-        console.log('_onClickKey', n);
         this.setState({
           test: n,
         });
