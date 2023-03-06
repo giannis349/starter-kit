@@ -156,130 +156,6 @@ export default class OfficeTourSplashScene extends Component {
             },
           }}
         />
-        {/* <Viro360Image
-          source={{uri: this.state.backgroundImage}}
-          onLoadEnd={this._onBackgroundPhotoLoadEnd}
-        /> */}
-        {/* <ViroText
-            text="Enter lesson number!"
-            width={6}
-            height={1}
-            position={polarToCartesian([-2, 0, 0])}
-            style={styles.textStyle}
-            outerStroke={{type: 'Outline', width: 8, color: '#dd5400'}}
-          />
-          <ViroText
-            text={'Pin: ' + this.state.newpin}
-            width={6}
-            height={1}
-            position={polarToCartesian([-2, 0, 10])}
-            style={styles.textStyle}
-            outerStroke={{type: 'Outline', width: 8, color: '#dd5400'}}
-          />
-          <ViroText
-            text="1"
-            width={6}
-            height={1}
-            position={polarToCartesian([-2, -10, 20])}
-            style={styles.textStyle}
-            outerStroke={{type: 'Outline', width: 8, color: '#dd5400'}}
-            onFuse={{callback: this._onClickNum('1'), timeToFuse: 1000}}
-          />
-          <ViroText
-            text="2"
-            width={6}
-            height={1}
-            position={polarToCartesian([-2, 0, 20])}
-            style={styles.textStyle}
-            outerStroke={{type: 'Outline', width: 8, color: '#dd5400'}}
-            onFuse={{callback: this._onClickNum('2'), timeToFuse: 1000}}
-          />
-          <ViroText
-            text="3"
-            width={6}
-            height={1}
-            position={polarToCartesian([-2, 10, 20])}
-            style={styles.textStyle}
-            outerStroke={{type: 'Outline', width: 8, color: '#dd5400'}}
-            onFuse={{callback: this._onClickNum('3'), timeToFuse: 1000}}
-          />
-          <ViroText
-            text="4"
-            width={6}
-            height={1}
-            position={polarToCartesian([-2, -10, 30])}
-            style={styles.textStyle}
-            outerStroke={{type: 'Outline', width: 8, color: '#dd5400'}}
-            onFuse={{callback: this._onClickNum('4'), timeToFuse: 1000}}
-          />
-          <ViroText
-            text="5"
-            width={6}
-            height={1}
-            position={polarToCartesian([-2, 0, 30])}
-            style={styles.textStyle}
-            outerStroke={{type: 'Outline', width: 8, color: '#dd5400'}}
-            onFuse={{callback: this._onClickNum('5'), timeToFuse: 1000}}
-          />
-          <ViroText
-            text="6"
-            width={6}
-            height={1}
-            position={polarToCartesian([-2, 10, 30])}
-            style={styles.textStyle}
-            outerStroke={{type: 'Outline', width: 8, color: '#dd5400'}}
-            onFuse={{callback: this._onClickNum('6'), timeToFuse: 1000}}
-          />
-          <ViroText
-            text="7"
-            width={6}
-            height={1}
-            position={polarToCartesian([-2, -10, 40])}
-            style={styles.textStyle}
-            outerStroke={{type: 'Outline', width: 8, color: '#dd5400'}}
-            onFuse={{callback: this._onClickNum('7'), timeToFuse: 1000}}
-          />
-          <ViroText
-            text="8"
-            width={6}
-            height={1}
-            position={polarToCartesian([-2, 0, 40])}
-            style={styles.textStyle}
-            outerStroke={{type: 'Outline', width: 8, color: '#dd5400'}}
-            onFuse={{callback: this._onClickNum('8'), timeToFuse: 1000}}
-          />
-          <ViroText
-            text="9"
-            width={6}
-            height={1}
-            position={polarToCartesian([-2, 10, 40])}
-            style={styles.textStyle}
-            outerStroke={{type: 'Outline', width: 8, color: '#dd5400'}}
-            onFuse={{callback: this._onClickNum('9'), timeToFuse: 1000}}
-          />
-          <ViroImage
-            height={0.3}
-            width={0.27}
-            position={polarToCartesian([-2, -14, 48])}
-            source={getlesimg}
-            onFuse={{callback: this._onClickNum('getlesson'), timeToFuse: 1000}}
-          />
-          <ViroText
-            text="0"
-            width={6}
-            height={1}
-            position={polarToCartesian([-2, 0, 50])}
-            style={styles.textStyle}
-            outerStroke={{type: 'Outline', width: 8, color: '#dd5400'}}
-            onFuse={{callback: this._onClickNum('0'), timeToFuse: 1000}}
-          />
-          <ViroImage
-            height={0.3}
-            width={0.3}
-            position={polarToCartesian([-2, 14, 48])}
-            source={remnum}
-            onFuse={{callback: this._onClickNum('remove'), timeToFuse: 1000}}
-          /> */}
         {/*
          * Display a spinner icon while the background image is being loaded.
          * Once loaded, hide spinner and show the Info UI Elements.
@@ -310,7 +186,7 @@ export default class OfficeTourSplashScene extends Component {
             outerStroke={{type: 'Outline', width: 8, color: '#dd5400'}}
           />
           <ViroText
-            text={'Pin: ' + this.state.newpin + this.state.test}
+            text={'Pin: ' + this.state.newpin}
             width={6}
             height={1}
             position={polarToCartesian([-2, 0, 10])}
@@ -324,136 +200,6 @@ export default class OfficeTourSplashScene extends Component {
           />
         </ViroNode>
       );
-      // return (
-      //   <ViroNode
-      //     opacity={1.0}
-      //     animation={{
-      //       name: 'fadeIn',
-      //       run: this.state.showSceneItems,
-      //       loop: false,
-      //     }}>
-      //     <ViroText
-      //       text="Enter lesson number!"
-      //       width={6}
-      //       height={1}
-      //       position={polarToCartesian([-2, 0, 0])}
-      //       style={styles.textStyle}
-      //       outerStroke={{type: 'Outline', width: 8, color: '#dd5400'}}
-      //     />
-      //     <ViroText
-      //       text={'Pin: ' + this.state.newpin}
-      //       width={6}
-      //       height={1}
-      //       position={polarToCartesian([-2, 0, 10])}
-      //       style={styles.textStyle}
-      //       outerStroke={{type: 'Outline', width: 8, color: '#dd5400'}}
-      //     />
-      //     <ViroText
-      //       text="1"
-      //       width={6}
-      //       height={1}
-      //       position={polarToCartesian([-2, -10, 20])}
-      //       style={styles.textStyle}
-      //       outerStroke={{type: 'Outline', width: 8, color: '#dd5400'}}
-      //       onFuse={{callback: this._onClickNum('1'), timeToFuse: 1000}}
-      //     />
-      //     <ViroText
-      //       text="2"
-      //       width={6}
-      //       height={1}
-      //       position={polarToCartesian([-2, 0, 20])}
-      //       style={styles.textStyle}
-      //       outerStroke={{type: 'Outline', width: 8, color: '#dd5400'}}
-      //       onFuse={{callback: this._onClickNum('2'), timeToFuse: 1000}}
-      //     />
-      //     <ViroText
-      //       text="3"
-      //       width={6}
-      //       height={1}
-      //       position={polarToCartesian([-2, 10, 20])}
-      //       style={styles.textStyle}
-      //       outerStroke={{type: 'Outline', width: 8, color: '#dd5400'}}
-      //       onFuse={{callback: this._onClickNum('3'), timeToFuse: 1000}}
-      //     />
-      //     <ViroText
-      //       text="4"
-      //       width={6}
-      //       height={1}
-      //       position={polarToCartesian([-2, -10, 30])}
-      //       style={styles.textStyle}
-      //       outerStroke={{type: 'Outline', width: 8, color: '#dd5400'}}
-      //       onFuse={{callback: this._onClickNum('4'), timeToFuse: 1000}}
-      //     />
-      //     <ViroText
-      //       text="5"
-      //       width={6}
-      //       height={1}
-      //       position={polarToCartesian([-2, 0, 30])}
-      //       style={styles.textStyle}
-      //       outerStroke={{type: 'Outline', width: 8, color: '#dd5400'}}
-      //       onFuse={{callback: this._onClickNum('5'), timeToFuse: 1000}}
-      //     />
-      //     <ViroText
-      //       text="6"
-      //       width={6}
-      //       height={1}
-      //       position={polarToCartesian([-2, 10, 30])}
-      //       style={styles.textStyle}
-      //       outerStroke={{type: 'Outline', width: 8, color: '#dd5400'}}
-      //       onFuse={{callback: this._onClickNum('6'), timeToFuse: 1000}}
-      //     />
-      //     <ViroText
-      //       text="7"
-      //       width={6}
-      //       height={1}
-      //       position={polarToCartesian([-2, -10, 40])}
-      //       style={styles.textStyle}
-      //       outerStroke={{type: 'Outline', width: 8, color: '#dd5400'}}
-      //       onFuse={{callback: this._onClickNum('7'), timeToFuse: 1000}}
-      //     />
-      //     <ViroText
-      //       text="8"
-      //       width={6}
-      //       height={1}
-      //       position={polarToCartesian([-2, 0, 40])}
-      //       style={styles.textStyle}
-      //       outerStroke={{type: 'Outline', width: 8, color: '#dd5400'}}
-      //       onFuse={{callback: this._onClickNum('8'), timeToFuse: 1000}}
-      //     />
-      //     <ViroText
-      //       text="9"
-      //       width={6}
-      //       height={1}
-      //       position={polarToCartesian([-2, 10, 40])}
-      //       style={styles.textStyle}
-      //       outerStroke={{type: 'Outline', width: 8, color: '#dd5400'}}
-      //       onFuse={{callback: this._onClickNum('9'), timeToFuse: 1000}}
-      //     />
-      //     <ViroImage
-      //       height={0.3}
-      //       width={0.27}
-      //       position={polarToCartesian([-2, -14, 48])}
-      //       source={getlesimg}
-      //       onFuse={{callback: this._onClickNum('getlesson'), timeToFuse: 1000}}
-      //     />
-      //     <ViroText
-      //       text="0"
-      //       width={6}
-      //       height={1}
-      //       position={polarToCartesian([-2, 0, 50])}
-      //       style={styles.textStyle}
-      //       outerStroke={{type: 'Outline', width: 8, color: '#dd5400'}}
-      //       onFuse={{callback: this._onClickNum('0'), timeToFuse: 1000}}
-      //     />
-      //     <ViroImage
-      //       height={0.3}
-      //       width={0.3}
-      //       position={polarToCartesian([-2, 14, 48])}
-      //       source={remnum}
-      //       onFuse={{callback: this._onClickNum('remove'), timeToFuse: 1000}}
-      //     />
-      //   </ViroNode>
-      // );
     } else {
       return this._createpois();
     }
@@ -537,6 +283,7 @@ export default class OfficeTourSplashScene extends Component {
   }
   _clickGet(c) {
     console.log('_clickGet', c);
+    this._onClickNum(c);
   }
   _createpois() {
     console.log(
@@ -574,18 +321,16 @@ export default class OfficeTourSplashScene extends Component {
     console.log('Clicked!', source);
   }
   _onClickNum(n) {
-    return source => {
-      if (n.indexOf('remove') > -1) {
-        num = num.slice(0, -1);
-        this.setState({newpin: num});
-      } else if (n.indexOf('getlesson') > -1) {
-        this._getLesson(num);
-      } else if (n !== 'getlesson' || n !== 'remove') {
-        num += n;
-        this.setState({newpin: num});
-        console.log('2', n);
-      }
-    };
+    if (n.indexOf('backspace') > -1) {
+      num = num.slice(0, -1);
+      this.setState({newpin: num});
+    } else if (n.indexOf('enter') > -1) {
+      this._getLesson(num);
+    } else if (n && n.length > 0) {
+      num += n;
+      this.setState({newpin: num});
+      console.log('2', n);
+    }
   }
   /**
    * Callback function for when the user taps on back button located at the
