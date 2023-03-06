@@ -65,6 +65,7 @@ var num = '';
 var LoadingSpinner = require('./custom_controls/LoadingSpinner');
 var InfoElement = require('./custom_controls/InfoElement');
 var KeyboardPad = require('./KeyboardPad');
+var KeyPad = require('./KeyPad');
 
 const Humbug = {
   name: 'Humbug',
@@ -108,6 +109,8 @@ export default class OfficeTourSplashScene extends Component {
       hiddepinboard: true,
       experiense: null,
       currentpano: null,
+      userName: '',
+      userCreated: false,
     };
     this._clickGet = this._clickGet.bind(this);
     // bind `this` to functions
@@ -174,7 +177,32 @@ export default class OfficeTourSplashScene extends Component {
    * within this scene, and as well as a back button at the bottom of the scene.
    */
   _getKeypad() {
-    if (this.state.hiddepinboard) {
+    if (this.state.hiddepinboard && !this.state.userCreated) {
+      return (
+        <ViroNode opacity={1.0}>
+          <ViroText
+            text="Enter user name"
+            width={6}
+            height={1}
+            position={polarToCartesian([-2, 0, 0])}
+            style={styles.textStyle}
+            outerStroke={{type: 'Outline', width: 8, color: '#dd5400'}}
+          />
+          <ViroText
+            text={'Name: ' + this.state.userName}
+            width={6}
+            height={1}
+            position={polarToCartesian([-2, 0, 10])}
+            style={styles.textStyle}
+            outerStroke={{type: 'Outline', width: 8, color: '#dd5400'}}
+          />
+          <KeyboardPad
+            sendClick={this._clickGet.bind(this)}
+            position={[0, 0, 0]}
+          />
+        </ViroNode>
+      );
+    } else if (this.state.hiddepinboard) {
       return (
         <ViroNode opacity={1.0}>
           <ViroText
@@ -186,18 +214,14 @@ export default class OfficeTourSplashScene extends Component {
             outerStroke={{type: 'Outline', width: 8, color: '#dd5400'}}
           />
           <ViroText
-            text={'Pin: ' + this.state.newpin}
+            text={'Lesson: ' + this.state.newpin}
             width={6}
             height={1}
             position={polarToCartesian([-2, 0, 10])}
             style={styles.textStyle}
             outerStroke={{type: 'Outline', width: 8, color: '#dd5400'}}
           />
-          <KeyboardPad
-            {...Humbug}
-            sendClick={this._clickGet.bind(this)}
-            position={[0, 0, 0]}
-          />
+          <KeyPad sendClick={this._clickGet.bind(this)} position={[0, 0, 0]} />
         </ViroNode>
       );
     } else {
@@ -208,77 +232,6 @@ export default class OfficeTourSplashScene extends Component {
     // console.log('_getInfoControls', this.state.currentpano);
     if (this.state.currentpano) {
       return <ViroNode opacity={1.0}>{this._createpois()}</ViroNode>;
-
-      // for (let index = 0; index < this.state.currentpano.pois.length; index++) {
-      //   const poi = this.state.currentpano.pois[index];
-      //   console.log('poi', poi.title);
-
-      //   return (
-      //     <ViroImage
-      //       height={0.3}
-      //       width={0.3}
-      //       position={polarToCartesian([
-      //         poi.position.position.x,
-      //         poi.position.position.y,
-      //         poi.position.position.z,
-      //       ])}
-      //       source={indicator}
-      //     />
-      //     // <ViroNode
-      //     //   opacity={1.0}
-      //     //   animation={{
-      //     //     name: 'fadeIn',
-      //     //     run: this.state.showSceneItems,
-      //     //     loop: false,
-      //     //   }}
-      //     //   position={polarToCartesian([0, 0, 0])}>
-      //     //   {/* <ViroText
-      //     //     text="Hello World"
-      //     //     width={3}
-      //     //     height={1}
-      //     //     style={styles.poitextStyle}
-      //     //     position={polarToCartesian([
-      //     //       poi.position.position.x,
-      //     //       poi.position.position.y,
-      //     //       poi.position.position.z,
-      //     //     ])}
-      //     //   /> */}
-      //     //   <InfoElement
-      //     //     content={slutWindowCard}
-      //     //     contentCardScale={[3.67, 4, 1]}
-      //     //     position={polarToCartesian([
-      //     //       poi.position.position.x,
-      //     //       poi.position.position.y,
-      //     //       poi.position.position.z,
-      //     //     ])}
-      //     //     onClick={this._onClick}
-      //     //   />
-      //     //   {/* <InfoElement
-      //     //     content={slutWindowCard}
-      //     //     contentCardScale={[3.67, 4, 1]}
-      //     //     position={polarToCartesian([-2, 0, 50])}
-      //     //     onClick={this._onClick}
-      //     //   />
-      //     //   <InfoElement
-      //     //     content={monorailInfoCard}
-      //     //     contentCardScale={[3.67, 4, 1]}
-      //     //     position={polarToCartesian([-5, 77, -10])}
-      //     //   />
-      //     //   <InfoElement
-      //     //     content={statueWindowCard}
-      //     //     contentCardScale={[4, 3.95, 2]}
-      //     //     position={polarToCartesian([-5, 277, 0])}
-      //     //   /> */}
-      //     //   {/* <ViroImage
-      //     //     scale={[1, 1, 1]}
-      //     //     position={[0, -3.5, 0]}
-      //     //     rotation={[-90, 0, 0]}
-      //     //     source={backImage}
-      //     //     onClick={this._onClick}
-      //     //   /> */}
-      //     // </ViroNode>
-      //   );
-      // }
     }
   }
   _clickGet(c) {
@@ -321,15 +274,29 @@ export default class OfficeTourSplashScene extends Component {
     console.log('Clicked!', source);
   }
   _onClickNum(n) {
-    if (n.indexOf('backspace') > -1) {
-      num = num.slice(0, -1);
-      this.setState({newpin: num});
-    } else if (n.indexOf('enter') > -1) {
-      this._getLesson(num);
-    } else if (n && n.length > 0) {
-      num += n;
-      this.setState({newpin: num});
-      console.log('2', n);
+    if (this.state.userCreated) {
+      if (n.indexOf('backspace') > -1) {
+        num = num.slice(0, -1);
+        this.setState({newpin: num});
+      } else if (n.indexOf('enter') > -1) {
+        this._getLesson(num);
+      } else if (n && n.length > 0) {
+        num += n;
+        this.setState({newpin: num});
+        console.log('2', n);
+      }
+    } else {
+      if (n.indexOf('backspace') > -1) {
+        num = num.slice(0, -1);
+        this.setState({userName: num});
+      } else if (n.indexOf('enter') > -1) {
+        // this._getLesson(num);
+        this.setState({userCreated: true});
+      } else if (n && n.length > 0) {
+        num += n;
+        this.setState({userName: num});
+        console.log('2', n);
+      }
     }
   }
   /**

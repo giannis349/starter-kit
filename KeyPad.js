@@ -55,7 +55,7 @@ export default class KeyboardPad extends Component {
       <ViroNode>
         <ViroFlexView
           transformBehaviors={['billboard']}
-          width={0.55}
+          width={0.2}
           height={0.23}
           opacity={1.0}
           position={[0, -0.3, -0.27]}
