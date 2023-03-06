@@ -23,36 +23,8 @@ var Image7 = require('./res/7.png');
 var Image8 = require('./res/8.png');
 var Image9 = require('./res/9.png');
 var Image0 = require('./res/0.png');
-var qImage = require('./res/icons8-circled-q-50.png');
-var wImage = require('./res/icons8-circled-w-50.png');
-var eImage = require('./res/icons8-circled-e-50.png');
-var rImage = require('./res/icons8-circled-r-50.png');
-var tImage = require('./res/icons8-circled-t-50.png');
-var yImage = require('./res/icons8-circled-y-50.png');
-var uImage = require('./res/icons8-circled-u-50.png');
-var iImage = require('./res/icons8-circled-i-50.png');
-var oImage = require('./res/icons8-circled-o-50.png');
-var pImage = require('./res/icons8-circled-p-50.png');
-var papakiImage = require('./res/papaki.png');
-var aImage = require('./res/icons8-circled-a-50.png');
-var sImage = require('./res/icons8-circled-s-50.png');
-var dImage = require('./res/icons8-circled-d-50.png');
-var fImage = require('./res/icons8-circled-f-50.png');
-var gImage = require('./res/icons8-circled-g-50.png');
-var hImage = require('./res/icons8-circled-h-50.png');
-var jImage = require('./res/icons8-circled-j-50.png');
-var kImage = require('./res/icons8-circled-k-50.png');
-var lImage = require('./res/icons8-circled-l-50.png');
-var zImage = require('./res/icons8-circled-z-50.png');
-var xImage = require('./res/icons8-circled-x-50.png');
-var cImage = require('./res/icons8-circled-c-50.png');
-var vImage = require('./res/icons8-circled-v-50.png');
-var bImage = require('./res/icons8-circled-b-50.png');
-var nImage = require('./res/icons8-circled-n-50.png');
-var mImage = require('./res/icons8-circled-m-50.png');
 var enterImage = require('./res/enter.png');
 var backspaceImage = require('./res/backspace.png');
-var spaceImage = require('./res/space.png');
 
 export default class KeyboardPad extends Component {
   constructor() {
