@@ -14,7 +14,7 @@
  */
 import React, {Component, useState} from 'react';
 import {SafeAreaView, StyleSheet, TextInput} from 'react-native';
-
+import {io} from 'socket.io-client';
 import {
   ViroScene,
   Viro360Image,
@@ -67,27 +67,60 @@ var InfoElement = require('./custom_controls/InfoElement');
 var KeyboardPad = require('./KeyboardPad');
 var KeyPad = require('./KeyPad');
 
-const Humbug = {
-  name: 'Humbug',
-  level: 5,
-  hp: 20,
-  type: 'cpu',
-  moves: {
-    move_1: {
-      name: 'Tackle',
-      power: 4,
-    },
-    move_2: {
-      name: 'Growl',
-      power: 0,
-    },
-  },
-};
-
+// const socket = io('https://sockets.schoovr.com');
+// socket.on('connect', () => {
+//   console.log('connect');
+// });
+// socket.on('teacher_data', data => {
+//   console.log('teacher_data');
+//   if (data.type === 'select') {
+//     if (data.data.scene === this.state.currentpano.id) {
+//       if (!data.data.poi) {
+//         console.log('teacher_data', data);
+//         return;
+//       } else {
+//         let ind = this.state.experience.data.panos.findIndex(
+//           x => x.id === data.data.scene,
+//         );
+//         if (ind > -1) {
+//           console.log('ind', ind);
+//         }
+//       }
+//     }
+//   }
+// });
+let that = this;
 export default class OfficeTourSplashScene extends Component {
   constructor(props) {
     super(props);
-
+    this.socket = io('https://sockets.schoovr.com');
+    this.socket.on('connect', () => {
+      console.log('connect');
+    });
+    this.socket.on('teacher_data', data => {
+      console.log('teacher_data1', this.state.experiense);
+      if (data.type === 'select') {
+        if (data.data.scene === this.state.currentpano.id) {
+          if (!data.data.poi) {
+            console.log('teacher_data', data);
+            return;
+          }
+        } else {
+          console.log(
+            'experiense.data.panos',
+            this.state.experiense.data.panos,
+          );
+          let ind = this.state.experiense.data.panos.findIndex(
+            x => x.id === data.data.scene,
+          );
+          if (ind > -1) {
+            console.log('ind', ind);
+            this.setState({currentpano: this.state.experiense.data.panos[ind]});
+            this._gotoscene();
+          }
+        }
+      }
+    });
     // set initial state
     this.state = {
       showSceneItems: false,
@@ -113,21 +146,6 @@ export default class OfficeTourSplashScene extends Component {
       userCreated: false,
     };
     this._clickGet = this._clickGet.bind(this);
-    // bind `this` to functions
-    // this._getInfoControls = this._getInfoControls.bind(this);
-    // this._onBackClick = this._onBackClick.bind(this);
-    // this._onBackgroundPhotoLoadEnd = this._onBackgroundPhotoLoadEnd.bind(this);
-    // setTimeout(() => {
-    //   this.setState({backgroundImage: source2});
-    //   // fetch('https://cdn2.schoovr.com/launchbypin/60266')
-    //   //   .then(response => response.json())
-    //   //   .then(json => {
-    //   //     console.log('res');
-    //   //   })
-    //   //   .catch(error => {
-    //   //     console.error(error);
-    //   //   });
-    // }, 5000);
   }
 
   /**
@@ -176,6 +194,64 @@ export default class OfficeTourSplashScene extends Component {
    * Displays a set of InfoElement controls representing several POI locations
    * within this scene, and as well as a back button at the bottom of the scene.
    */
+  _gotoscene() {
+    console.log('gotoscene');
+    let newsource =
+      'https://cdn2.schoovr.com/tiles/' +
+      this.state.currentpano.data.name.split('.')[0] +
+      '/' +
+      this.state.currentpano.data.name.split('.')[0] +
+      '.tiles/preview.jpg';
+    this.setState({backgroundImage: newsource});
+    this.setState({
+      imgnx:
+        'https://cdn2.schoovr.com/tiles/' +
+        this.state.currentpano.data.name.split('.')[0] +
+        '/' +
+        this.state.currentpano.data.name.split('.')[0] +
+        '.tiles/mobile_l.jpg',
+    });
+    this.setState({
+      imgpx:
+        'https://cdn2.schoovr.com/tiles/' +
+        this.state.currentpano.data.name.split('.')[0] +
+        '/' +
+        this.state.currentpano.data.name.split('.')[0] +
+        '.tiles/mobile_r.jpg',
+    });
+    this.setState({
+      imgny:
+        'https://cdn2.schoovr.com/tiles/' +
+        this.state.currentpano.data.name.split('.')[0] +
+        '/' +
+        this.state.currentpano.data.name.split('.')[0] +
+        '.tiles/mobile_d.jpg',
+    });
+    this.setState({
+      imgpy:
+        'https://cdn2.schoovr.com/tiles/' +
+        this.state.currentpano.data.name.split('.')[0] +
+        '/' +
+        this.state.currentpano.data.name.split('.')[0] +
+        '.tiles/mobile_u.jpg',
+    });
+    this.setState({
+      imgnz:
+        'https://cdn2.schoovr.com/tiles/' +
+        this.state.currentpano.data.name.split('.')[0] +
+        '/' +
+        this.state.currentpano.data.name.split('.')[0] +
+        '.tiles/mobile_b.jpg',
+    });
+    this.setState({
+      imgpz:
+        'https://cdn2.schoovr.com/tiles/' +
+        this.state.currentpano.data.name.split('.')[0] +
+        '/' +
+        this.state.currentpano.data.name.split('.')[0] +
+        '.tiles/mobile_f.jpg',
+    });
+  }
   _getKeypad() {
     if (this.state.hiddepinboard && !this.state.userCreated) {
       return (
@@ -280,6 +356,7 @@ export default class OfficeTourSplashScene extends Component {
         this.setState({newpin: num});
       } else if (n.indexOf('enter') > -1) {
         this._getLesson(num);
+        this._start();
       } else if (n && n.length > 0) {
         num += n;
         this.setState({newpin: num});
@@ -300,6 +377,17 @@ export default class OfficeTourSplashScene extends Component {
       }
     }
   }
+  _start() {
+    const obj = {
+      pin: this.state.newpin,
+      name: this.state.userName,
+    };
+    this.socket.emit('join_as_student', obj);
+    // if (!item.value.waitingroom) {
+    //   started.value = true
+    //   guidemode.value = true
+    // }
+  }
   /**
    * Callback function for when the user taps on back button located at the
    * bottom of the scene. This pops the current scene to the previous one.
@@ -312,7 +400,8 @@ export default class OfficeTourSplashScene extends Component {
     fetch('https://cdn2.schoovr.com/launchbypin/' + l)
       .then(response => response.json())
       .then(json => {
-        this.setState({experiense: json.data});
+        console.log('res.data', json.data);
+        this.setState({experiense: json.data.experience});
         this.setState({currentpano: json.data.experience.data.panos[0]});
         let newsource =
           'https://cdn2.schoovr.com/tiles/' +
