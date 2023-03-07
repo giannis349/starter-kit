@@ -13,8 +13,7 @@
  */
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {StyleSheet} from 'react-native';
-
+import {StyleSheet, DeviceEventEmitter} from 'react-native';
 import {
   ViroImage,
   ViroNode,
@@ -28,13 +27,6 @@ import {
  * Pull in all the images needed for this control.
  */
 var infoIconImage = require('../res/poi_white.png');
-
-/**
- * Tags for referencing the animation component views used to execute animations on
- * our Icon Card and our Content Card views.
- */
-var CONTENT_CARD_REF = 'contentCard';
-var ICON_CARD_REF = 'iconCard';
 
 /**
  * Custom control that toggles between two viro images: an Icon Card and a Content Card.
@@ -54,15 +46,17 @@ export default class InfoElement extends Component {
 
   constructor() {
     super();
-
+    DeviceEventEmitter.addListener('open_poi', (...args) =>
+      this._onCardClickteacher(args),
+    );
     // set initial state here
     this.state = {
       iconCardAnimation: 'showIconAnim',
       contentCardAnimation: 'hideAnim',
       runInfoCardAnimation: false,
       runIconCardAnimation: false,
+      selectedpoi_id: 0,
     };
-
     // bind `this` to functions
     this._onCardClick = this._onCardClick.bind(this);
     this._animateIconCard = this._animateIconCard.bind(this);
@@ -167,16 +161,36 @@ export default class InfoElement extends Component {
       </ViroNode>
     );
   }
-
+  /**
+   * Teacher control poi
+   */
+  _onCardClickteacher(args) {
+    this.setState({
+      selectedpoi_id: args[0].poi.selected ? args[0].poi.id : 0,
+    });
+    if (this.state.selectedpoi_id === 0) {
+      this._animateContentCard(false);
+    } else {
+      this._onCardClick();
+    }
+  }
   /**
    * Attached callback to the onClick event of this control. We then
    * animate in / out either the Icon or Content card correspondingly.
    */
+
   _onCardClick() {
     var showContentCard = this.state.contentCardAnimation == 'hideAnim';
-    if (showContentCard == true) {
+    if (
+      showContentCard == true &&
+      (this.state.selectedpoi_id == 0 ||
+        this.state.selectedpoi_id == this.props.content.id)
+    ) {
       this._animateIconCard(!showContentCard);
-    } else {
+    } else if (
+      this.state.selectedpoi_id == 0 ||
+      this.state.selectedpoi_id == this.props.content.id
+    ) {
       this._animateContentCard(showContentCard);
     }
   }
