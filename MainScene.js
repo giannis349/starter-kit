@@ -23,6 +23,7 @@ import {io} from 'socket.io-client';
 import {
   ViroScene,
   Viro360Image,
+  ViroFlexView,
   ViroSkyBox,
   ViroText,
   ViroAnimations,
@@ -67,7 +68,7 @@ export default class OfficeTourSplashScene extends Component {
       console.log('disconnect');
     });
     this.socket.on('teacher_data', data => {
-      // console.log('teacher_data', data);
+      console.log('teacher_data', data);
       if (data.type === 'select') {
         if (data.data.scene === this.state.currentpano.id) {
           if (!data.data.poi) {
@@ -105,6 +106,16 @@ export default class OfficeTourSplashScene extends Component {
           this.state.currentpano.pois[index1].selected = false;
           DeviceEventEmitter.emit('open_poi', {poi: element});
         }
+      } else if (data.type === 'lesson_content') {
+        console.log('lesson_content', data.data);
+        if (typeof data.data === 'string') {
+          this.setState({lesson_content_url: data.data});
+        } else {
+          this.state.current_content = data.data;
+          this._getpp();
+        }
+      } else if (data.type === 'close_lesson') {
+        this.setState({lesson_content_url: null});
       }
     });
     // set initial state
@@ -130,8 +141,12 @@ export default class OfficeTourSplashScene extends Component {
       currentpano: null,
       userName: '',
       userCreated: false,
+      lesson_content_url: null,
+      current_content: null,
+      vrmode: true,
     };
     this._clickGet = this._clickGet.bind(this);
+    DeviceEventEmitter.addListener('vrmode', (...args) => this._vrmode(args));
   }
 
   /**
@@ -175,7 +190,12 @@ export default class OfficeTourSplashScene extends Component {
       </ViroScene>
     );
   }
-
+  _vrmode(s) {
+    console.log('vrmode', s);
+    this.setState({
+      vrmode: !this.state.vrmode,
+    });
+  }
   /**
    * Displays a set of InfoElement controls representing several POI locations
    * within this scene, and as well as a back button at the bottom of the scene.
@@ -283,6 +303,41 @@ export default class OfficeTourSplashScene extends Component {
             outerStroke={{type: 'Outline', width: 8, color: '#dd5400'}}
           />
           <KeyPad sendClick={this._clickGet.bind(this)} position={[0, 0, 0]} />
+        </ViroNode>
+      );
+    } else if (this.state.lesson_content_url || this.state.current_content) {
+      return (
+        <ViroNode opacity={1.0}>
+          <ViroFlexView
+            width={2}
+            height={1}
+            opacity={1.0}
+            position={[0.8, 0, 0.5]}
+            transformBehaviors={['billboard']}
+            backgroundColor={'white'}
+            animation={{
+              name: this.state.contentCardAnimation,
+              run: this.state.runInfoCardAnimation,
+              loop: false,
+              onFinish: this._animateContentCardFinished,
+            }}>
+            <ViroImage
+              transformBehaviors={['billboard']}
+              width={2}
+              height={1}
+              opacity={1.0}
+              scale={[0.95, 0.95, 0.95]}
+              source={{
+                uri: this.state.lesson_content_url,
+              }}
+              animation={{
+                name: this.state.iconCardAnimation,
+                run: this.state.runIconCardAnimation,
+                loop: false,
+                onFinish: this._animateIconCardFinished,
+              }}
+            />
+          </ViroFlexView>
         </ViroNode>
       );
     } else {
@@ -436,6 +491,27 @@ export default class OfficeTourSplashScene extends Component {
       .catch(error => {
         console.error(error);
       });
+  }
+  _getpp(l) {
+    // fetch('https://cdn2.schoovr.com/getpp/' + l)
+    let data = {
+      url: this.state.current_content.content.url,
+    };
+    fetch('https://cdn2.schoovr.com/getpp/', {
+      method: 'POST', // *GET, POST, PUT, DELETE, etc.
+      mode: 'no-cors', // no-cors, *cors, same-origin
+      cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+      credentials: 'same-origin', // include, *same-origin, omit
+      headers: {
+        'Content-Type': 'application/json',
+        // 'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      redirect: 'follow', // manual, *follow, error
+      referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+      body: data, // body data type must match "Content-Type" header
+    }).then(response => {
+      console.log('response', response);
+    });
   }
 }
 

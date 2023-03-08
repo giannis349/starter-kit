@@ -1,5 +1,10 @@
 import React, {Component} from 'react';
-import {SafeAreaView, StyleSheet, TextInput} from 'react-native';
+import {
+  SafeAreaView,
+  StyleSheet,
+  TextInput,
+  DeviceEventEmitter,
+} from 'react-native';
 
 import {
   ViroScene,
@@ -52,7 +57,8 @@ var nImage = require('./res/icons8-circled-n-50.png');
 var mImage = require('./res/icons8-circled-m-50.png');
 var enterImage = require('./res/enter.png');
 var backspaceImage = require('./res/backspace.png');
-
+var spaceImage = require('./res/space.png');
+var Image360 = require('./res/360.png');
 export default class KeyboardPad extends Component {
   constructor() {
     super();
@@ -110,16 +116,49 @@ export default class KeyboardPad extends Component {
         <ViroFlexView
           transformBehaviors={['billboard']}
           width={0.55}
-          height={0.23}
+          height={0.26}
           opacity={1.0}
           position={[0, -0.3, -0.27]}
           style={styles.flexback}>
           {this._buildpad()}
         </ViroFlexView>
+        <ViroImage
+          transformBehaviors={['billboard']}
+          key={40}
+          width={0.5}
+          height={0.05}
+          opacity={1.0}
+          scale={[0.7, 0.7, 0.7]}
+          position={[0, -0.36, -0.2]}
+          source={spaceImage}
+          onClick={this._onClickKey('space')}
+          onFuse={{callback: this._onClickKey('space'), timeToFuse: 1000}}
+        />
+        {/* <ViroImage
+          transformBehaviors={['billboard']}
+          key={41}
+          width={0.4}
+          height={0.4}
+          opacity={1.0}
+          scale={[0.7, 0.7, 0.7]}
+          position={[-0.4, -0.3, -0.11]}
+          source={Image360}
+          onClick={this._enterVr()}
+          onFuse={{callback: this._enterVr(false), timeToFuse: 1000}}
+        /> */}
       </ViroNode>
     );
   }
 
+  _enterVr(s) {
+    return source => {
+      if (s) {
+        DeviceEventEmitter.emit('vrmode', {vrmode: true});
+      } else {
+        DeviceEventEmitter.emit('vrmode', {vrmode: false});
+      }
+    };
+  }
   _buildpad() {
     return this.state.allKeys.map(val => {
       return (
