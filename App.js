@@ -13,7 +13,7 @@ import React, {Component} from 'react';
 
 // import {ViroVRSceneNavigator} from 'react-viro';
 import {ViroVRSceneNavigator} from '@viro-community/react-viro';
-import {DeviceEventEmitter} from 'react-native';
+import {View, DeviceEventEmitter, StyleSheet} from 'react-native';
 var createReactClass = require('create-react-class');
 
 /*
@@ -31,18 +31,19 @@ export default class ViroCodeSamplesSceneNavigator extends Component {
     super();
 
     this.state = {
-      vrmode: false,
+      vrmode: true,
     };
     DeviceEventEmitter.addListener('vrmode', (...args) => this._vrmode(args));
   }
   render() {
     return (
-      <ViroVRSceneNavigator
-        initialScene={{
-          scene: MainTour,
-        }}
-        apiKey={apiKey}
-      />
+      <View style={localStyles.viroContainer}>
+        <ViroVRSceneNavigator
+          initialScene={{scene: require('./MainScene')}}
+          apiKey={apiKey}
+          vrModeEnabled={this.state.vrmode}
+        />
+      </View>
     );
   }
   _vrmode(s) {
@@ -70,3 +71,9 @@ export default class ViroCodeSamplesSceneNavigator extends Component {
 // ViroCodeSamplesSceneNavigator = require('./js/ARDrivingCarDemo/ARDrivingCar');
 
 module.exports = ViroCodeSamplesSceneNavigator;
+var localStyles = StyleSheet.create({
+  viroContainer: {
+    flex: 1,
+    backgroundColor: 'black',
+  },
+});

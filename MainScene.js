@@ -155,7 +155,7 @@ export default class OfficeTourSplashScene extends Component {
    */
   render() {
     return (
-      <ViroScene style={styles.container}>
+      <ViroScene>
         <ViroSkyBox
           source={{
             nx: {
@@ -522,8 +522,7 @@ export default class OfficeTourSplashScene extends Component {
 var styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    backgroundColor: 'black',
   },
   boldFont: {
     color: '#FFFFFF',
